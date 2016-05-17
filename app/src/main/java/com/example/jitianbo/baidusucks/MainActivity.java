@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if(url.contains("baidu.com")){
 //                    ||view.getOriginalUrl().contains("www.baidu.com")||view.getUrl().contains("www.baidu.com")
                     view.loadUrl("https://google.ie");
-                    editText.setText(view.getOriginalUrl());
+                    editText.setText(view.getUrl());
                 }
             }
         });
