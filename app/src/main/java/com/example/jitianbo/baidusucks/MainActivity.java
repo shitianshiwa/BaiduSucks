@@ -10,11 +10,13 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button goBtn, forwardBtn, backBtn, stopBtn, refreshBtn,clearBtn;
     EditText editText = null;
     String url = "";
+    ProgressBar progressBar=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         clearBtn = (Button)findViewById(R.id.clear_btn);
         editText = (EditText) findViewById(R.id.editText);
         editText.setText("http://");
+        progressBar = (ProgressBar)findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
+        progressBar.setMax(100);
+        progressBar.setProgress(0);
+
         WebSettings settings = webView.getSettings();
         settings.setSupportZoom(true);          //支持缩放
         settings.setBuiltInZoomControls(true);
@@ -53,14 +61,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 view.loadUrl(url);  //加载新的url
                 return true;    //返回true,代表事件已处理,事件流到此终止
             }
+
             @Override
-            public void onLoadResource(WebView view, String url){
-                if(url.contains("baidu.com")){
+            public void onLoadResource(WebView view, String url) {
+                if (url.contains("baidu.com")) {
 //                    ||view.getOriginalUrl().contains("www.baidu.com")||view.getUrl().contains("www.baidu.com")
                     view.loadUrl("https://google.ie");
                     editText.setText(view.getUrl());
                 }
             }
+        });
+        webView.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                if (newProgress == 100) {
+                    progressBar.setVisibility(View.INVISIBLE);
+                } else {
+                    if(progressBar.getVisibility()==View.INVISIBLE)
+                        progressBar.setVisibility(View.VISIBLE);
+                    progressBar.setProgress(newProgress);
+                }
+            }
+
         });
         goBtn.setOnClickListener(this);
         forwardBtn.setOnClickListener(this);

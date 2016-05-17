@@ -14,9 +14,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/webView"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/go_btn"
         android:layout_alignEnd="@+id/go_btn"
-        android:layout_above="@+id/back_btn" />
+        android:layout_above="@+id/back_btn"
+        android:layout_below="@+id/progressBar" />
 
     <Button
         android:layout_width="wrap_content"
@@ -39,9 +39,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="  Back  "
+
         android:id="@+id/back_btn"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/refresh_btn" />
 
     <Button
         android:layout_width="wrap_content"
@@ -78,5 +80,17 @@
         android:id="@+id/clear_btn"
         android:layout_alignParentTop="true"
         android:layout_toStartOf="@+id/go_btn" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/go_btn"
+        android:layout_alignParentEnd="true"
+        android:maxHeight="20dp"
+        android:minHeight="10dp"
+        />
 
 </RelativeLayout>
