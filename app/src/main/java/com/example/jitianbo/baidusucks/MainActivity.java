@@ -26,7 +26,7 @@ import java.io.InputStreamReader;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     WebView webView = null;
-    Button goBtn, forwardBtn, backBtn, stopBtn, refreshBtn,clearBtn;
+    Button goBtn, forwardBtn, backBtn;
     EditText editText = null;
     String url = "";
     ProgressBar progressBar=null;
@@ -39,9 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         goBtn = (Button) findViewById(R.id.go_btn);
         forwardBtn = (Button) findViewById(R.id.forward_btn);
         backBtn = (Button) findViewById(R.id.back_btn);
-        stopBtn = (Button) findViewById(R.id.stop_btn);
-        refreshBtn = (Button) findViewById(R.id.refresh_btn);
-        clearBtn = (Button)findViewById(R.id.clear_btn);
+
         editText = (EditText) findViewById(R.id.editText);
         editText.setText("http://");
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
@@ -58,28 +56,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //当点击链接时,希望覆盖而不是打开新窗口
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);  //加载新的url
-                return true;    //返回true,代表事件已处理,事件流到此终止
+                view.loadUrl(url);
+                return true;
             }
 
             @Override
             public void onLoadResource(WebView view, String url) {
                 if (url.contains("baidu.com")) {
-//                    ||view.getOriginalUrl().contains("www.baidu.com")||view.getUrl().contains("www.baidu.com")
                     view.loadUrl("https://google.ie");
                     editText.setText(view.getUrl());
+
                 }
             }
         });
-        webView.setWebChromeClient(new WebChromeClient(){
+        webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 if (newProgress == 100) {
+                    editText.setText(view.getUrl());
                     progressBar.setVisibility(View.INVISIBLE);
+                    forwardBtn.setText(">>");
+                    forwardBtn.setOnClickListener(MainActivity.this);
                 } else {
-                    if(progressBar.getVisibility()==View.INVISIBLE)
+                    if (progressBar.getVisibility() == View.INVISIBLE)
                         progressBar.setVisibility(View.VISIBLE);
                     progressBar.setProgress(newProgress);
+                    forwardBtn.setText("X");
+                    forwardBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            webView.stopLoading();
+
+                        }
+                    });
                 }
             }
 
@@ -87,9 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         goBtn.setOnClickListener(this);
         forwardBtn.setOnClickListener(this);
         backBtn.setOnClickListener(this);
-        stopBtn.setOnClickListener(this);
-        refreshBtn.setOnClickListener(this);
-        clearBtn.setOnClickListener(this);
+
 
     }
 
@@ -126,17 +133,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             webView.goBack();
             editText.setText(webView.getUrl());
         }
-        else if (v.getId() == stopBtn.getId()) {
-            webView.stopLoading();
-            editText.setText(webView.getUrl());
-        }
-        else if (v.getId() == refreshBtn.getId()) {
-            webView.reload();
-            editText.setText(webView.getUrl());
-        }
-        else if(v.getId()==clearBtn.getId()){
-            editText.setText("http://");
-        }
+
     }
 
 
