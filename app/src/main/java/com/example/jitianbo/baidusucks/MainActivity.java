@@ -3,6 +3,7 @@ package com.example.jitianbo.baidusucks;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -26,19 +28,31 @@ import java.io.InputStreamReader;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     WebView webView = null;
-    Button goBtn, forwardBtn, backBtn;
+    Button goBtn, forwardBtn, backBtn,shezhiBtn,xiangxiBtn,shuaxinBtn,tianjiashuqianBtn,shuqianBtn,zhuyeBtn;
     EditText editText = null;
     String url = "";
     ProgressBar progressBar=null;
-
+    RelativeLayout relativeLayout1=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         webView = (WebView) findViewById(R.id.webView);
         goBtn = (Button) findViewById(R.id.go_btn);
         forwardBtn = (Button) findViewById(R.id.forward_btn);
         backBtn = (Button) findViewById(R.id.back_btn);
+        shezhiBtn = (Button) findViewById(R.id.shezhi_btn);
+        xiangxiBtn = (Button) findViewById(R.id.xiangxi_btn);
+        shuaxinBtn = (Button) findViewById(R.id.shuaxin_btn);
+        tianjiashuqianBtn = (Button) findViewById(R.id.tianjiashuqian_btn);
+        shuqianBtn = (Button) findViewById(R.id.shuqian_btn);
+        zhuyeBtn = (Button) findViewById(R.id.zhuye_btn);
+
+        shezhiBtn.setVisibility(View.GONE);
+        shuaxinBtn.setVisibility(View.GONE);
+        tianjiashuqianBtn.setVisibility(View.GONE);
+
 
         editText = (EditText) findViewById(R.id.editText);
         editText.setText("http://");
@@ -96,8 +110,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         goBtn.setOnClickListener(this);
         forwardBtn.setOnClickListener(this);
         backBtn.setOnClickListener(this);
+        xiangxiBtn.setOnClickListener(this);
+        shuaxinBtn.setOnClickListener(this);
+//        tianjiashuqianBtn.setOnClickListener(this);
+//        shuqianBtn.setOnClickListener(this);
+        zhuyeBtn.setOnClickListener(this);
 
-
+        relativeLayout1=(RelativeLayout)findViewById(R.id.relative1);
     }
 
     @Override
@@ -133,7 +152,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             webView.goBack();
             editText.setText(webView.getUrl());
         }
+        else if(v.getId()==xiangxiBtn.getId()){
+            if(xiangxiBtn.getText().equals("+")){
+                xiangxiBtn.setText("X");
+                relativeLayout1.setBackgroundColor(Color.argb(50,14,204,237));
+                shezhiBtn.setVisibility(View.VISIBLE);
+                shuaxinBtn.setVisibility(View.VISIBLE);
+                tianjiashuqianBtn.setVisibility(View.VISIBLE);
 
+            }
+            else if(xiangxiBtn.getText().equals("X")){
+                xiangxiBtn.setText("+");
+                relativeLayout1.setBackgroundColor(Color.WHITE);
+                relativeLayout1.getBackground().setAlpha(100);
+                shezhiBtn.setVisibility(View.GONE);
+                shuaxinBtn.setVisibility(View.GONE);
+                tianjiashuqianBtn.setVisibility(View.GONE);
+            }
+        } else if(v.getId()==zhuyeBtn.getId()){
+            webView.loadUrl("https://google.ie");
+        }
+        else if(v.getId()==shuaxinBtn.getId()){
+            webView.reload();
+        }
     }
 
 
@@ -191,9 +232,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void dialog1(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Connection Error");
-        builder.setMessage("Do you want to open network setting?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        builder.setTitle("网络错误");
+        builder.setMessage("是否打开网络设置");
+        builder.setPositiveButton("好的", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS);
@@ -202,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("算了", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -215,9 +256,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void dialog2(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Connection Succeed");
-        builder.setMessage("Your Internet works well");
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setTitle("网络正常");
+        builder.setMessage("这就是百度的正确用法");
+        builder.setPositiveButton("同意", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();

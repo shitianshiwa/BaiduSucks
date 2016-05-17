@@ -22,7 +22,6 @@ public class MyEditText extends EditText implements View.OnFocusChangeListener, 
         super(context);
     }
     public MyEditText(Context context, AttributeSet attrs) {
-        // 这里构造方法也很重要，不加这个很多属性不能再XML里面定义
         this(context, attrs, android.R.attr.editTextStyle);
     }
 
@@ -35,16 +34,11 @@ public class MyEditText extends EditText implements View.OnFocusChangeListener, 
         // 获取EditText的DrawableRight,假如没有设置我们就使用默认的图片
         mClearDrawable = getCompoundDrawables()[2];
         if (mClearDrawable == null) {
-            // throw new
-            // NullPointerException("You can add drawableRight attribute in XML");
             mClearDrawable = getResources().getDrawable(R.drawable.x2);
         }
         mClearDrawable.setBounds(0, 0, mClearDrawable.getIntrinsicWidth(), mClearDrawable.getIntrinsicHeight());
-        // 默认设置隐藏图标
         setClearIconVisible(false);
-        // 设置焦点改变的监听
         setOnFocusChangeListener(this);
-        // 设置输入框里面内容发生改变的监听
         addTextChangedListener(this);
     }
 
@@ -52,15 +46,12 @@ public class MyEditText extends EditText implements View.OnFocusChangeListener, 
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_UP) {
             if (getCompoundDrawables()[2] != null) {
-
                 boolean touchable = event.getX() > (getWidth() - getTotalPaddingRight()) && (event.getX() < ((getWidth() - getPaddingRight())));
-
                 if (touchable) {
                     this.setText("http://");
                 }
             }
         }
-
         return super.onTouchEvent(event);
     }
 
