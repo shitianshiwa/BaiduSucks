@@ -53,6 +53,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 view.loadUrl(url);  //加载新的url
                 return true;    //返回true,代表事件已处理,事件流到此终止
             }
+            @Override
+            public void onLoadResource(WebView view, String url){
+                if(url.contains("baidu.com")){
+//                    ||view.getOriginalUrl().contains("www.baidu.com")||view.getUrl().contains("www.baidu.com")
+                    view.loadUrl("https://google.ie");
+                    editText.setText(view.getOriginalUrl());
+                }
+            }
         });
         goBtn.setOnClickListener(this);
         forwardBtn.setOnClickListener(this);
@@ -67,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if (v.getId() == goBtn.getId()) {
             url = editText.getText().toString();
-            if (url.contains("baidu.com")) {
+            if (url.contains("www.baidu.com")) {//&&!url.equals("http://www.baidu.com")
                 Handler mHandler = new Handler();
                 mHandler.post(new Runnable() {
                     @Override
@@ -151,12 +159,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         {
             if(webView.canGoBack())
             {
-                webView.goBack();//返回上一页面
+                webView.goBack();
                 return true;
             }
             else
             {
-                System.exit(0);//退出程序
+                System.exit(0);
             }
         }
         return super.onKeyDown(keyCode, event);
