@@ -26,6 +26,7 @@
 
 
         <com.example.jitianbo.baidusucks.MyEditText
+            android:singleLine="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/editText"
@@ -46,7 +47,7 @@
 
     <WebView
         android:layout_width="match_parent"
-        android:layout_height="361dp"
+        android:layout_height="386dp"
         android:id="@+id/webView"
         android:layout_gravity="center" />
 
@@ -54,7 +55,7 @@
         android:id="@+id/relative1"
         android:layout_width="match_parent"
         android:layout_height="147dp"
-        android:layout_gravity="center_horizontal|bottom">
+        android:layout_gravity="right|bottom">
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
@@ -73,6 +74,7 @@
             android:id="@+id/forward_btn"
             android:layout_alignParentBottom="true"
             android:layout_toEndOf="@+id/back_btn" />
+
 
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -108,7 +110,7 @@
             android:text="设置"
             android:id="@+id/shezhi_btn"
             android:layout_alignParentTop="true"
-            android:layout_alignStart="@+id/shuqian_btn" />
+            android:layout_alignParentEnd="true" />
 
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -117,7 +119,7 @@
             android:text="刷新"
             android:id="@+id/shuaxin_btn"
             android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/back_btn" />
+            android:layout_alignParentStart="true" />
 
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -127,6 +129,52 @@
             android:id="@+id/tianjiashuqian_btn"
             android:layout_centerHorizontal="true"
             android:layout_alignBottom="@+id/shezhi_btn" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="搜索"
+            android:id="@+id/sousuo_btn"
+            android:layout_below="@+id/shuaxin_btn"
+            android:layout_alignBottom="@+id/sousuo_back_btn"
+            android:layout_alignStart="@+id/tianjiashuqian_btn"
+            android:layout_alignEnd="@+id/tianjiashuqian_btn" />
+        <com.example.jitianbo.baidusucks.MyEditText
+            android:singleLine="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText2"
+            android:layout_alignTop="@+id/sousuo_back_btn"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/sousuo_back_btn" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="&lt;"
+            android:id="@+id/sousuo_back_btn"
+            android:layout_alignTop="@+id/sousuo_forward_btn"
+            android:layout_toStartOf="@+id/sousuo_forward_btn" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=">"
+            android:id="@+id/sousuo_forward_btn"
+            android:layout_above="@+id/shuqian_btn"
+            android:layout_toStartOf="@+id/zhuye_btn" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="X"
+            android:id="@+id/sousuo_close_btn"
+            android:layout_above="@+id/shuqian_btn"
+            android:layout_toEndOf="@+id/shuqian_btn" />
 
     </RelativeLayout>
 </FrameLayout>
